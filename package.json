@@ -4,7 +4,6 @@
   "description": "A simple date class with methods to manipulate the date and format the date",
   "license": "MIT",
   "author": "",
-  "type": "module",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
