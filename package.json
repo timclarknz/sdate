@@ -1,6 +1,6 @@
 {
   "name": "@timclark/sdate",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A simple date class with methods to manipulate the date and format the date",
   "license": "MIT",
   "author": "",
