@@ -1,4 +1,4 @@
-import sdate from './index';
+import sdate from './src/index';
 
 describe('sdate', () => {
   describe('constructor', () => {
