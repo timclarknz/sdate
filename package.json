@@ -9,10 +9,8 @@
   "types": "dist/esm/index.d.ts",
   "sideEffects": false,
   "exports": {
-    ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js"
-    }
+    "import": "./dist/esm/index.js",
+    "require": "./dist/cjs/index.js"
   },
   "files": [
     "dist"

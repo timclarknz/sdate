@@ -157,11 +157,3 @@ Returns a new `sdate` instance for the last day of the month.
 
 ### `daysInMonth(): sdate[]`
 Returns an array of `sdate` objects for every day in the month.
-
-## Running Tests
-
-To run the test suite, use the following command:
-
-```bash
-npm test
-```
