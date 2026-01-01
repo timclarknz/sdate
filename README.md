@@ -7,7 +7,7 @@ A simple and immutable date library for TypeScript/JavaScript.
 ## Installation
 
 ```bash
-npm install sdate
+npm install @timclark/sdate
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ npm install sdate
 Import the `sdate` class and create a new instance.
 
 ```typescript
-import sdate from 'sdate';
+import sdate from '@timclark/sdate';
 
 // Create a date object for today
 const today = new sdate();

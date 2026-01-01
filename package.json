@@ -1,11 +1,15 @@
 {
-  "name": "edate",
-  "version": "1.0.0",
-  "description": "",
-  "license": "ISC",
+  "name": "@timclark/sdate",
+  "version": "1.0.2",
+  "description": "A simple date class with methods to manipulate the date and format the date",
+  "license": "MIT",
   "author": "",
   "type": "module",
-  "main": "index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "jest"
   },

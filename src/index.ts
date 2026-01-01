@@ -1,5 +1,5 @@
 export default class sdate {
-  #date: string;
+  private immutableDate: string;
 
   /**
    * Creates a new date object.
@@ -10,7 +10,7 @@ export default class sdate {
       if (!/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
         throw new Error("Invalid date format. Please use YYYY-MM-DD.");
       }
-      this.#date = dateString;
+      this.immutableDate = dateString;
       return;
     }
     if (dateString && dateString instanceof Date) {
@@ -18,7 +18,7 @@ export default class sdate {
       const year = date.getFullYear();
       const month = date.getMonth() + 1;
       const day = date.getDate();
-      this.#date = `${year}-${String(month).padStart(2, "0")}-${String(
+      this.immutableDate = `${year}-${String(month).padStart(2, "0")}-${String(
         day
       ).padStart(2, "0")}`;
       return;
@@ -28,7 +28,7 @@ export default class sdate {
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();
-    this.#date = `${year}-${String(month).padStart(2, "0")}-${String(
+    this.immutableDate = `${year}-${String(month).padStart(2, "0")}-${String(
       day
     ).padStart(2, "0")}`;
   }
@@ -39,7 +39,7 @@ export default class sdate {
    * @returns {string} The new date in YYYY-MM-DD format.
    */
   addDays(days: number): sdate {
-    const dateObj = new Date(this.#date + 'T00:00:00Z');
+    const dateObj = new Date(this.immutableDate + "T00:00:00Z");
     dateObj.setUTCDate(dateObj.getUTCDate() + days);
     return new sdate(makeTDate(dateObj));
   }
@@ -50,7 +50,7 @@ export default class sdate {
    * @returns {string} The new date in YYYY-MM-DD format.
    */
   addMonths(months: number): sdate {
-    const dateObj = new Date(this.#date + 'T00:00:00Z');
+    const dateObj = new Date(this.immutableDate + "T00:00:00Z");
     dateObj.setUTCMonth(dateObj.getUTCMonth() + months);
     return new sdate(makeTDate(dateObj));
   }
@@ -61,7 +61,7 @@ export default class sdate {
    * @returns {string} The new date in YYYY-MM-DD format.
    */
   addYears(years: number): sdate {
-    const dateObj = new Date(this.#date + 'T00:00:00Z');
+    const dateObj = new Date(this.immutableDate + "T00:00:00Z");
     dateObj.setUTCFullYear(dateObj.getUTCFullYear() + years);
     return new sdate(makeTDate(dateObj));
   }
@@ -72,8 +72,8 @@ export default class sdate {
    * @returns {number} The difference in days.
    */
   difference(anotherDate: sdate): number {
-    const date1 = new Date(this.#date + 'T00:00:00Z');
-    const date2 = new Date(anotherDate.toString() + 'T00:00:00Z');
+    const date1 = new Date(this.immutableDate + "T00:00:00Z");
+    const date2 = new Date(anotherDate.toString() + "T00:00:00Z");
     const diffTime = Math.abs(date2.getTime() - date1.getTime());
     return Math.round(diffTime / (1000 * 60 * 60 * 24));
   }
@@ -83,7 +83,7 @@ export default class sdate {
    * @returns {string} The formatted date.
    */
   fDate(): string {
-    const [year, month, day] = this.#date.split("-");
+    const [year, month, day] = this.immutableDate.split("-");
     return `${day}/${month}/${year}`;
   }
 
@@ -104,7 +104,7 @@ export default class sdate {
    * @returns {string} The date string.
    */
   toString(): string {
-    return this.#date;
+    return this.immutableDate;
   }
 
   /**
@@ -112,7 +112,7 @@ export default class sdate {
    * @returns {number} The year.
    */
   year(): number {
-    return new Date(this.#date).getUTCFullYear();
+    return new Date(this.immutableDate).getUTCFullYear();
   }
 
   /**
@@ -128,7 +128,7 @@ export default class sdate {
    * @returns {number} The month.
    */
   month(): number {
-    return new Date(this.#date).getMonth() + 1;
+    return new Date(this.immutableDate).getMonth() + 1;
   }
 
   /**
@@ -144,7 +144,7 @@ export default class sdate {
    * @returns {number} The day.
    */
   date(): number {
-    return new Date(this.#date).getDate();
+    return new Date(this.immutableDate).getDate();
   }
 
   /**
@@ -164,7 +164,7 @@ export default class sdate {
    * @returns {number} The day of the week.
    */
   day(): number {
-    return new Date(this.#date + 'T00:00:00Z').getUTCDay();
+    return new Date(this.immutableDate + "T00:00:00Z").getUTCDay();
   }
 
   /**
@@ -202,7 +202,7 @@ export default class sdate {
    * @returns {sdate} The date of the start of the week.
    */
   startOfWeek(): sdate {
-    const dateObj = new Date(this.#date + 'T00:00:00Z');
+    const dateObj = new Date(this.immutableDate + "T00:00:00Z");
     const day = dateObj.getUTCDay();
     const diff = dateObj.getUTCDate() - day + (day === 0 ? -6 : 1);
     return new sdate(makeTDate(new Date(dateObj.setUTCDate(diff))));
@@ -252,11 +252,8 @@ export default class sdate {
    * @param {number} month optional, the month to check
    * @returns {boolean} true if the date is in month
    */
-  inMonth(
-    year: number = this.year(),
-    month: number = this.month()
-  ): boolean {
-    let [y, m, d] = this.#date.split("-");
+  inMonth(year: number = this.year(), month: number = this.month()): boolean {
+    let [y, m, d] = this.immutableDate.split("-");
     if (parseInt(y) === year && parseInt(m) === month) return true;
     return false;
   }
@@ -265,11 +262,10 @@ export default class sdate {
    * @returns {boolean} true if the date is today
    */
   isToday(): boolean {
-    if (this.#date === new sdate().toString()) return true;
+    if (this.immutableDate === new sdate().toString()) return true;
     return false;
   }
 
-  
   startOfMonth(): sdate {
     return new sdate(
       `${this.year()}-${String(this.month()).padStart(2, "0")}-01`
@@ -277,7 +273,7 @@ export default class sdate {
   }
 
   endOfMonth(): sdate {
-    const date = new Date(this.#date);
+    const date = new Date(this.immutableDate);
     const endOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
     return new sdate(
